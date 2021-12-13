@@ -1,6 +1,7 @@
+텍스트가 클립보드에 추가되었습니다.텍스트가 클립보드에 추가되었습니다.텍스트가 클립보드에 추가되었습니다.
 
-# Created by https://www.toptal.com/developers/gitignore/api/python,venv,django
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,venv,django
+# Created by https://www.toptal.com/developers/gitignore/api/django,python,venv,jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=django,python,venv,jupyternotebooks
 
 ### Django ###
 *.log
@@ -150,6 +151,17 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+# website: http://jupyter.org/
+
+*/.ipynb_checkpoints/*
+
+# IPython
+
+# Remove previous ipynb_checkpoints
+#   git rm -r .ipynb_checkpoints/
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -226,4 +238,4 @@ cython_debug/
 pyvenv.cfg
 pip-selfcheck.json
 
-# End of https://www.toptal.com/developers/gitignore/api/python,venv,django
+# End of https://www.toptal.com/developers/gitignore/api/django,python,venv,jupyternotebooks
