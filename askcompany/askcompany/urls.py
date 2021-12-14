@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), # URL Reverse
     path('blog/', include("blog.urls")),
     path('instagram/', include('instagram.urls')),
+    path('accounts/', include("accounts.urls")),
 ]
 
 if settings.DEBUG:

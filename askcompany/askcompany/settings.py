@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # CustomApp
     'blog',
     'instagram',
+    'accounts',
 ]
 
 MIDDLEWARE = [
