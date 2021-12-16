@@ -2,8 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView, RedirectView
+
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/instagram/'), name='root'),
     path('admin/', admin.site.urls), # URL Reverse
     path('blog/', include("blog.urls")),
     path('instagram/', include('instagram.urls')),
