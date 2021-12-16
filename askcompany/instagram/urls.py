@@ -1,18 +1,11 @@
 from django.urls import path,re_path,register_converter
 from . import views
-
-class YearConverter:
-    regex = r"20\d{2}"
-    
-    def to_python(self, value):
-        return int(value)
-    
-    def to_url(self, value):
-        return str(value)
+from .converters import YearConverter, MonthConverter, DayConverter
 
 
 register_converter(YearConverter, 'year')
-
+register_converter(MonthConverter, 'month')
+register_converter(DayConverter, 'day')
 
 app_name = 'instagram' # URL Reverse에서 namespace 역할을 한다.
 
@@ -26,6 +19,10 @@ urlpatterns = [
     # re_path('archives/(?P<year>20\d{2})/', views.achives_year),
     # 정규표현식 path
     
-    path('acrhives/<year:year>/', views.achives_year),
+    # path('acrhives/<year:year>/', views.achives_year),
     # register_converter를 활용한 path (커스텀 컨버터)
+    path('archive/', views.post_archive, name='post_archive'),
+    path('archive/<year:year>/', views.post_archive_year, name='post_year_archive'),
+    # path('archive/<year:year>/<month:motnh>/', views.post_archive_month, name='post_month_archive'),
+    # path('archive/<year:year>/<month:motnh>/<day:day>/', views.post_archive_day, name='post_day_archive'),
 ]
