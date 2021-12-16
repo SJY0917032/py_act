@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     # third party
     'django_extensions',
     'debug_toolbar',
+    'bootstrap4',
     # CustomApp
     'blog',
     'instagram',

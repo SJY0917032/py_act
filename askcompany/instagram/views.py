@@ -1,9 +1,10 @@
+from django.db.models.query import QuerySet
 from django.views.generic import ListView,DetailView
 from django.http import request,HttpResponse, Http404
 from django.shortcuts import get_object_or_404,render
 from .models import Post
 
-post_list = ListView.as_view(model=Post)
+post_list = ListView.as_view(model=Post, paginate_by=10)
 
 
 # def post_list(request):
@@ -28,8 +29,21 @@ post_list = ListView.as_view(model=Post)
 #         'post' : post,
 #     })
     
-post_detail = DetailView.as_view(model=Post)    
+# post_detail = DetailView.as_view(
+#     model=Post,
+#     queryset=Post.objects.filter(is_public=True))    
     
+class PostDetailView(DetailView):
+    model = Post
+    # queryset = Post.objects.filter(is_public=True)
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if not self.request.user.is_authenticated:
+            qs = qs.filter(is_public=True)
+        return qs
+
+post_detail = PostDetailView.as_view()
 
 def achives_year(request, year):
     return HttpResponse(f"{year}년 archives")

@@ -1,4 +1,5 @@
 <!--instagram/templates/instagram/post_list.html -->
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -18,10 +19,13 @@
         <input type="submit" value="검색" />
     </form>
 
-    <table class="table table-borderd table-hover">
+    <table class="table table-bordered table-hover">
         <tbody>
             {% for post in post_list %}
             <tr>
+                <td>
+                    {{ post.pk }}
+                </td>
                 <td>
                     {{ post.message }}
                 </td>
@@ -36,6 +40,8 @@
             {% endfor %}
         </tbody>
     </table>
-</body>
-
+    {% if is_paginated %}
+        {% bootstrap_pagination page_obj justify_content="center" %}
+    {% endif %}
+    </body>
 </html>
