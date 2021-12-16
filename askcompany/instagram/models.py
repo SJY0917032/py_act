@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -15,6 +16,10 @@ class Post(models.Model):
     def __str__(self):
         # return f"custom Post Obejct ({self.id})"
         return self.message
+    
+    def get_absolute_url(self):
+        return reverse("instagram:post_detail", args=[self.pk])
+    
 
     class Meta:
         ordering = ['-id']

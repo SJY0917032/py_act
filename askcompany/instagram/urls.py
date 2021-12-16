@@ -1,4 +1,4 @@
-from django.urls import path,re_path,register_converter
+from django.urls import path,register_converter
 from . import views
 from .converters import YearConverter, MonthConverter, DayConverter
 
@@ -11,7 +11,7 @@ app_name = 'instagram' # URL Reverse에서 namespace 역할을 한다.
 
 urlpatterns = [
     path('', views.post_list, name='post_list'),
-    path('<int:pk>/', views.post_detail),
+    path('<int:pk>/', views.post_detail, name="post_detail"),
     
     # path('acrhives/<int:year>/', views.achives_year),
     # 일반 path
