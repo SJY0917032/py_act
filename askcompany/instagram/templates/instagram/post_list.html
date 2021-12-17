@@ -1,58 +1,41 @@
-<!--instagram/templates/instagram/post_list.html -->
+{% extends 'instagram/layout.html' %}
 {% load bootstrap4 %}
-<!DOCTYPE html>
-<html lang="ko">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>instagram / POST LIST</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/lux/bootstrap.min.css"
-        integrity="sha384-9+PGKSqjRdkeAU7Eu4nkJU8RFaH8ace8HGXnkiKMP9I9Te0GJ4/km3L1Z8tXigpG" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous">
-    </script>
-</head>
+{% block title %}
+instagram / POST LIST
+{% endblock title %}
 
-<body>
+{% block content %}
+<form action="" method="get">
+    <input type="text" name="q" value="{{ q }}" />
+    <input type="submit" value="검색" />
+</form>
 
-    <form action="" method="get">
-        <input type="text" name="q" value="{{ q }}" />
-        <input type="submit" value="검색" />
-    </form>
-
-    <table class="table table-bordered table-hover">
-        <tbody>
-            {% for post in post_list %}
-            <tr>
-                <td>
-                    {{ post.pk }}
-                </td>
-                <td>
-                    {# <a href="{% url 'instagram:post_detail' post.pk %}"> #}
-                    <a href="{{ post.get_absolute_url }}">
-                        {{ post.message }}
-                    </a>
-                </td>
-                <td>
-                    {% if post.photo %}
-                    <img src="{{ post.photo.url }}" style="width:80px;" />
-                    {% else %}
-                    No PHOTO
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% if is_paginated %}
-    {% bootstrap_pagination page_obj justify_content="center" %}
-    {% endif %}
-</body>
-
-</html>
+<table class="table table-bordered table-hover">
+    <tbody>
+        {% for post in post_list %}
+        <tr>
+            <td>
+                {{ post.pk }}
+            </td>
+            <td>
+                {# <a href="{% url 'instagram:post_detail' post.pk %}"> #}
+                <a href="{{ post.get_absolute_url }}">
+                    {{ post.message }}
+                </a>
+            </td>
+            <td>
+                {% if post.photo %}
+                <img src="{{ post.photo.url }}" style="width:80px;" />
+                {% else %}
+                No PHOTO
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% if is_paginated %}
+{% bootstrap_pagination page_obj justify_content="center" %}
+{% endif %}
+{% endblock content %}
