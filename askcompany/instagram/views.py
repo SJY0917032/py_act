@@ -5,21 +5,52 @@ from django.views import View
 from django.views.generic import ListView, DetailView, ArchiveIndexView, YearArchiveView
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
 from .models import Post
 from .forms import PostForm
 
 
+
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save()
+            post = form.save(commit=False)
+            # commit = false는 미처다 채우지못한것을 여기서 채우기위한 요건.
+            # 꼭 post.save()를 해야만한다.
+            post.author = request.user
+            post.save()
+            messages.success(request, '새 글이 등록되었습니다.')
             return redirect(post)
     else :
         form = PostForm()
         
     return render(request, 'instagram/post_form.html', {
         'form': form,
+        'post' : None,
+    })
+
+@login_required
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    if post.author != request.user:
+        messages.error(request, '접근 권한이 없습니다!')
+        return redirect(post)
+        
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save()
+            messages.success(request, '포스팅을 수정했습니다.')
+            return redirect(post)
+    else :
+        form = PostForm(instance=post)
+        
+    return render(request, 'instagram/post_form.html', {
+        'form': form,
+        'post' : post,
     })
 
 # post_list = login_required(ListView.as_view(model=Post, paginate_by=10))
@@ -40,6 +71,8 @@ post_list = PostListView.as_view()
 #     q = request.GET.get('q', '')
 #     if q:
 #         qs = qs.filter(message__icontains=q)
+
+#     messages.info(request, '리스트입니다~')
 
 #     return render(request, 'instagram/post_list.html', {
 #         'post_list' : qs,
